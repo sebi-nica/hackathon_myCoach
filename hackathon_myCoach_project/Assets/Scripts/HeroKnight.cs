@@ -59,31 +59,8 @@ public class HeroKnight : MonoBehaviour {
         }
 
         instance = this;
-        DontDestroyOnLoad(gameObject);  
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    void OnDestroy()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        // 1. Find the correct spawn point
-        GameObject spawn = GameObject.FindGameObjectWithTag("Respawn");
-        if (spawn != null) transform.position = spawn.transform.position;
-
-        // 2. Resurrect the player
-        currentHealth = maxHealth;
-        if (healthBar != null) healthBar.UpdateHealth(currentHealth, maxHealth);
-
-        // 3. Reset the animator so they stop playing the death animation
-        if (m_animator != null)
-        {
-            m_animator.Rebind();
-            m_animator.Update(0f);
-        }
+        //DontDestroyOnLoad(gameObject);  
+        //SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     void Start()
@@ -263,6 +240,7 @@ public class HeroKnight : MonoBehaviour {
     {
         TriggerDeath();
         await Task.Delay(800);
+        Destroy(gameObject);
         GameManager.Instance.PlayerDied();
     }
 
@@ -297,16 +275,6 @@ public class HeroKnight : MonoBehaviour {
         {
             // Fills from 0 to 1 while on cooldown
             return 1f - (blockTimer / blockCooldown);
-        }
-    }
-
-    void AE_SlideDust()
-    {
-        Vector3 spawnPosition = m_facingDirection == 1 ? wallSensorR2.position : wallSensorL2.position;
-        if (m_slideDust != null)
-        {
-            GameObject dust = Instantiate(m_slideDust, spawnPosition, gameObject.transform.localRotation) as GameObject;
-            dust.transform.localScale = new Vector3(m_facingDirection, 1, 1);
         }
     }
 }

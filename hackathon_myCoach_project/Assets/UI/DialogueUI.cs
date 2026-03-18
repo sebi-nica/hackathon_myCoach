@@ -17,6 +17,12 @@ public class DialogueUI : MonoBehaviour
 
     void Awake()
     {
+        // If an instance already exists, do absolutely nothing and wait to be destroyed
+        if (Instance != null && Instance != this) 
+        {
+            return; 
+        }
+
         Instance = this;
         panel.SetActive(false);
     }
@@ -49,5 +55,14 @@ public class DialogueUI : MonoBehaviour
         // Fire the callback
         onCloseCallback?.Invoke();
         onCloseCallback = null;
+    }
+
+    void OnDestroy()
+    {
+        // If this specific instance is the one being destroyed, clear the global slot
+        if (Instance == this)
+        {
+            Instance = null;
+        }
     }
 }
