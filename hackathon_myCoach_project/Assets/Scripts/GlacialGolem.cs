@@ -248,7 +248,6 @@ public class GlacialGolem : MonoBehaviour
         currentState = BossState.Attacking;
         chargeTimer = 0f;
         animator.SetBool("isWalking", false);
-        Debug.Log("performing charge");
 
         // Telegraph: rapid red flashes so the player can react
         yield return StartCoroutine(FlashColor(Color.red, 0.15f));
@@ -259,13 +258,21 @@ public class GlacialGolem : MonoBehaviour
         yield return new WaitForSeconds(0.1f);
 
         // Lock in direction at the moment the charge starts
-        Vector2 chargeDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
-        spriteRenderer.flipX = chargeDir.x < 0;
-        animator.SetBool("isWalking", true);
+        //Vector2 chargeDir = ((Vector2)player.position - (Vector2)transform.position).normalized;
+
+        Vector2 chargeDir;
+
+        if(player.position.x < transform.position.x) chargeDir = new Vector2(-1, 0);
+        else chargeDir = new Vector2(1, 0);
+        spriteRenderer.flipX = chargeDir.x > 0;
+        //animator.SetBool("isWalking", true);
 
         float elapsed = 0f;
-        float chargeTime = 0.55f;
+        float chargeTime = 1.55f;
         bool hitPlayer = false;
+
+        Debug.Log("performing charge" + chargeDir);
+
 
         while (elapsed < chargeTime)
         {
@@ -275,16 +282,16 @@ public class GlacialGolem : MonoBehaviour
             {
                 player.GetComponent<HeroKnight>().TakeDamage(chargeDamage, this.transform);
                 hitPlayer = true;
-                StartCoroutine(ScaleTo(new Vector3(1.4f, 0.7f, 1f), 0.05f));
+                //StartCoroutine(ScaleTo(new Vector3(1.4f, 0.7f, 1f), 0.05f));
             }
 
             elapsed += Time.deltaTime;
             yield return null;
         }
 
-        animator.SetBool("isWalking", false);
+        //animator.SetBool("isWalking", false);
         spriteRenderer.color = Color.white;
-        yield return StartCoroutine(ScaleTo(originalScale, 0.15f));
+        //yield return StartCoroutine(ScaleTo(originalScale, 0.15f));
 
         yield return new WaitForSeconds(0.4f);
         if (currentState != BossState.Dead) currentState = BossState.Chasing;

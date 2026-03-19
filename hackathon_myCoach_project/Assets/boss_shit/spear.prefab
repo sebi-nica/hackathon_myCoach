@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 8031217238069621370}
   - component: {fileID: -2665989779151828320}
   - component: {fileID: -8215108928313839511}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: spear
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,7 +84,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_MaskInteraction: 0
-  m_Sprite: {fileID: -6270953770400647376, guid: 7da19ad3be3b1474e8aa4a7fde83be7e, type: 3}
+  m_Sprite: {fileID: -6270953770400647376, guid: 87a1da972ec74b842875b0d4a13a6972, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -172,4 +172,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::IceSpear
   damage: 24
   lifetime: 4
-  hitVFXPrefab: {fileID: 0}
